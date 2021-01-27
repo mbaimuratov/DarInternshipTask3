@@ -55,7 +55,7 @@ class StudentsStorage {
 
     fun restoreLastDeleted() {
         if (tempTrash.isEmpty()) return
-        studentsSet.addFirst(tempTrash.pop())
+        addStudent(tempTrash.pop())
     }
 
 }

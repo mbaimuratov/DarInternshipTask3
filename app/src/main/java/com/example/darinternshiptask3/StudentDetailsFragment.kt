@@ -14,8 +14,10 @@ class StudentDetailsFragment : Fragment(R.layout.student_details_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val student = requireArguments().getParcelable<Student>("student_constant")
+        val student = requireArguments().getParcelable<Student>(STUDENT_KEY)
+
         binding = StudentDetailsFragmentBinding.bind(view)
+
         binding.apply {
             tvDetailName.text = student?.name
             tvDetailId.text = student?.id.toString()
