@@ -1,6 +1,9 @@
 package com.example.darinternshiptask3
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -15,6 +18,7 @@ class StudentListFragment : Fragment(R.layout.student_list_fragment), StudentLis
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
         adapter = StudentListAdapter(this)
         binding = StudentListFragmentBinding.bind(view)
         studentsStorage = StudentsStorage.getInstance()!!
@@ -27,20 +31,16 @@ class StudentListFragment : Fragment(R.layout.student_list_fragment), StudentLis
         binding.addStudent.setOnClickListener {
             val name = binding.etName.text.toString()
             if (name == "") {
-                val student = Student(StudentsStorage().getId())
-                if (studentsStorage.hasStudent(student)) {
-                    Snackbar.make(it, "Student is already present", Snackbar.LENGTH_SHORT).show()
-                } else {
-                    studentsStorage.addStudent(student)
-                    studentsStorage.incrementIds()
-                }
+                val student = Student(studentsStorage.getId())
+                studentsStorage.addStudent(student)
+                studentsStorage.updateId()
             } else {
                 val student = Student(name = name, id = StudentsStorage().getId())
                 if (studentsStorage.hasStudent(student)) {
                     Snackbar.make(it, "Student is already present", Snackbar.LENGTH_SHORT).show()
                 } else {
                     studentsStorage.addStudent(student)
-                    studentsStorage.incrementIds()
+                    studentsStorage.updateId()
                 }
             }
             addStudentToLayout()
@@ -63,4 +63,17 @@ class StudentListFragment : Fragment(R.layout.student_list_fragment), StudentLis
         addStudentToLayout()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.restore_student) {
+            studentsStorage.restoreLastDeleted()
+            addStudentToLayout()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }
