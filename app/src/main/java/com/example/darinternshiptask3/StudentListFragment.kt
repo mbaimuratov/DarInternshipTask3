@@ -1,10 +1,12 @@
 package com.example.darinternshiptask3
 
+import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.darinternshiptask3.databinding.StudentListFragmentBinding
@@ -16,17 +18,20 @@ class StudentListFragment : Fragment(R.layout.student_list_fragment), StudentLis
     private lateinit var adapter: StudentListAdapter
     private lateinit var binding: StudentListFragmentBinding
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        adapter = StudentListAdapter(this)
+        studentsStorage = StudentsStorage.getInstance()!!
+        studentsStorage.createDummyStudents()
+        addStudentToLayout()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
-        adapter = StudentListAdapter(this)
         binding = StudentListFragmentBinding.bind(view)
-        studentsStorage = StudentsStorage.getInstance()!!
 
         binding.rvStudentList.adapter = adapter
-
-        studentsStorage.createDummyStudents()
-        addStudentToLayout()
 
         binding.addStudent.setOnClickListener {
             val name = binding.etName.text.toString()
@@ -43,8 +48,15 @@ class StudentListFragment : Fragment(R.layout.student_list_fragment), StudentLis
                     studentsStorage.updateId()
                 }
             }
+            refreshLayout()
             addStudentToLayout()
         }
+    }
+
+    private fun refreshLayout() {
+        binding.etName.text.clear()
+        val imm: InputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(requireView().windowToken, 0)
     }
 
     private fun addStudentToLayout() {
