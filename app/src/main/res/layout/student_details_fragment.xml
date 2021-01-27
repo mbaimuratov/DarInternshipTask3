@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp">
+
+    <TextView
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_margin="8dp"
+        android:id="@+id/tv_detail_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Meiirbek"/>
+
+    <TextView
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_margin="8dp"
+        android:id="@+id/tv_detail_surname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Baimuratov"/>
+
+    <TextView
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_margin="8dp"
+        tools:text="2019"
+        android:id="@+id/tv_detail_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_margin="8dp"
+        tools:text="A"
+        android:id="@+id/tv_detail_grade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:layout_margin="8dp"
+        tools:src="@drawable/ic_launcher_background"
+        android:id="@+id/iv_detail_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
